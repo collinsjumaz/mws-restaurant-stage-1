@@ -177,6 +177,7 @@ nav h1 a {
   max-width: 100%;
  /* min-height: 248px; */
   min-width: 100%;
+  overflow: hidden;
 }
 #restaurants-list li h1 {
   color: #f18200;
@@ -188,6 +189,16 @@ nav h1 a {
   margin: 20px 0 10px;
   text-transform: uppercase;
 }
+#restaurants-list .restaurant-text-area {
+  padding: 0 25px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content:space-between;
+  min-height: 170px;
+  max-height: 170px;
+}
+
 #restaurants-list p {
   margin: 0;
   font-size: 11pt;

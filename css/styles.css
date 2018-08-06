@@ -204,7 +204,7 @@ nav h1 a {
   font-size: 11pt;
 }
 #restaurants-list li button {
-  background-color:#a85900;
+  background-color:purple;
   border-bottom: 3px solid #eee;
   color: #f00f0;
   display: inline-block;
@@ -215,7 +215,15 @@ nav h1 a {
   text-decoration: none;
   text-transform: uppercase;
 }
-
+.filter-selects {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content:flex-start;
+}
+.filter-label{
+display: none;
+}
 /* ====================== Restaurant Details ====================== */
 .inside header {
   position: fixed;

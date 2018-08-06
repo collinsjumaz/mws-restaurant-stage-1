@@ -203,12 +203,12 @@ nav h1 a {
   margin: 0;
   font-size: 11pt;
 }
-#restaurants-list li a {
-  background-color: orange;
+#restaurants-list li button {
+  background-color:#a85900;
   border-bottom: 3px solid #eee;
-  color: #fff;
+  color: #f00f0;
   display: inline-block;
-  font-size: 10pt;
+  font-size: 16pt;
   margin: 15px 0 0;
   padding: 8px 30px 10px;
   text-align: center;

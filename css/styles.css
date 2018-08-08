@@ -90,14 +90,16 @@ nav h1 a {
 
 /* Add a color to all links inside the list */
 #breadcrumb li a {
-    color: #0275d8;
+    color: purple;
     text-decoration: none;
+    border-bottom: 1px dotted purple;
 }
 
 /* Add a color on mouse-over */
 #breadcrumb li a:hover {
     color: #01447e;
     text-decoration: underline;
+    border:none;
 }
 /* ====================== Map ====================== */
 #map {
@@ -134,26 +136,31 @@ nav h1 a {
 
 /* ====================== Restaurant Listing ====================== */
 #restaurants-list {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
-  background-color: #f3f3f3;
+   background-color: #f3f3f3;
   list-style: outside none none;
   margin: 0;
-  padding: 30px 15px 60px;
+  /* padding: 30px 15px 60px; */
+  padding: 20px 15px;
   text-align: center;
+  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 #restaurants-list li {
-  background-color: #fff;
+ background-color: #fff;
   border: 2px solid #ccc;
   font-family: Arial,sans-serif;
   margin: 15px;
   min-height: 380px;
+  /* padding: 0 30px 25px; */
   padding: 0 0 25px;
   text-align: left;
-  min-width: 270px;
-  max-width: 300px;
+  /* width: 270px; */
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
 }
 @media only screen and (min-width: 0px){
   #restaurants-list li{
@@ -203,17 +210,18 @@ nav h1 a {
   margin: 0;
   font-size: 11pt;
 }
-#restaurants-list li button {
-  background-color:purple;
-  border-bottom: 3px solid #eee;
-  color: #f00f0;
-  display: inline-block;
-  font-size: 16pt;
-  margin: 15px 0 0;
-  padding: 8px 30px 10px;
+
+#restaurants-list li button{
+  background-color: brown;
+  padding: 10px 30px;
   text-align: center;
-  text-decoration: none;
   text-transform: uppercase;
+  margin: 0 20px;
+}
+
+#restaurants-list li button:hover {
+  color: #ff9292;
+  cursor: pointer;
 }
 .filter-selects {
   display: flex;

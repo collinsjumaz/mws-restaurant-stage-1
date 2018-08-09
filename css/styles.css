@@ -221,8 +221,8 @@ nav h1 a {
   align-content: center;
 }
 #restaurants-list li a{
-  background-color: brown;
-  padding: 10px 30px;
+  background-color:purple;
+  padding: 10px 35px;
   text-align: center;
   text-transform: uppercase;
   margin: 0 20px;

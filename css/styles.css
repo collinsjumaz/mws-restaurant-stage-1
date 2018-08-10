@@ -157,6 +157,7 @@ nav h1 a {
   min-width: 270px;
   max-width: 300px;
   align-content: center;
+  text-align: center;
 }
 @media only screen and (min-width: 0px){
   #restaurants-list li{
@@ -243,10 +244,12 @@ display: none;
 .inside #map-container {
   background: blue none repeat scroll 0 0;
   height: 87%;
-  position: fixed;
+  display: block;
+  /*position: fixed;*/
   right: 0;
-  top: 80px;
-  width: 50%;
+  top: 87px;
+  /*width: 50%;*/
+  height: 400px;
 }
 .inside #map {
   background-color: #ccc;

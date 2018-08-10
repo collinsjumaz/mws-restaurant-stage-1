@@ -222,10 +222,10 @@ nav h1 a {
 }
 #restaurants-list li a{
   background-color:purple;
-  padding: 10px 35px;
+  padding: 10px 30px;
   text-align: center;
   text-transform: uppercase;
-  margin: 0 20px;
+  margin: 0 10px;
 }
 
 #restaurants-list li button:hover {

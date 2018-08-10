@@ -220,7 +220,7 @@ nav h1 a {
   flex-direction: column;
   align-content: center;
 }
-#restaurants-list li a{
+#restaurants-list li a {
   background-color:purple;
   padding: 10px 30px;
   text-align: center;

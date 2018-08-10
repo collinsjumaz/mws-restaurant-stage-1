@@ -161,15 +161,22 @@ createRestaurantHTML = (restaurant) => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  li.append(image);
+  //const imgurlbase = DBHelper.imageUrlForRestaurant(restaurant, 'tiles');
+  //const imgparts = imgurlbase.split('.');
+  //const imgurl1x = {imgparts{0}}
 
-  const name = document.createElement('h1');
+  li.append(image);
+  const div = document.createElement('div');
+  div.className ='restaurant-texarea';
+  li.append(div);
+
+  const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
-  li.append(name);
+  div.append(name);
 
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;
-  li.append(neighborhood);
+  div.append(neighborhood);
 
   const address = document.createElement('p');
   address.innerHTML = restaurant.address;

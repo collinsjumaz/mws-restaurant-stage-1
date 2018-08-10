@@ -207,12 +207,12 @@ nav h1 a {
   font-size: 11pt;
 }
 
-#restaurants-list li button {
+#restaurants-list li a {
   background-color:#a85900;
   /*border-bottom: 3px solid #eee;*/
- /* color: #f0f0f0;
-  display: inline-block;*/
-  /*font-size: 14px;*/
+  color: #f0f0f0;
+  display: block;
+  font-size: 14px;
   padding: 10px 30px;
   text-align: center;
   text-decoration: none;
@@ -220,7 +220,7 @@ nav h1 a {
   margin: 0 20px;
 }
 
-#restaurants-list li button:hover {
+#restaurants-list li a:hover {
   color: #ff9292;
   cursor: pointer;
 }
@@ -255,8 +255,8 @@ display: none;
 }
 .inside #footer {
   bottom: 0;
-  position: absolute;
-  width: 50%;
+  /*position: absolute;
+  width: 50%; */
 }
 #restaurant-name {
   color: #f18200;

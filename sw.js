@@ -1,7 +1,6 @@
 const CacheName = 'restaurant';
 
-//  assets to cache on install
-// cache each restaurant detail page as well
+//  listing assets to cache on install
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CacheName)
@@ -14,7 +13,6 @@ self.addEventListener('install', event => {
           '/js/register_sw.js',
           '/js/main.js',
           '/js/restaurant_info.js',
-          // '/data/restaurants.json',
           '/restaurant.html?id=1',
           '/restaurant.html?id=2',
           '/restaurant.html?id=3',
@@ -33,7 +31,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// Call Activate Event
+// Activating  Event
 self.addEventListener('activate', event=> {
   console.log('Service Worker: Activated');
   // Remove unwanted caches
@@ -51,15 +49,15 @@ self.addEventListener('activate', event=> {
   );
 });
 
-// Call Fetch Event
+//  Fetching  Event
 self.addEventListener('fetch', event => {
   console.log('Service Worker: Fetching');
   event.respondWith(
     fetch(event.request)
       .then(res => {
-        // Make copy/clone of response
+        // Make copy of response
         const resClone = res.clone();
-        // Open cahce
+        // Open cache
         caches.open(cacheName).then(cache => {
           // Add response to cache
           cache.put(event.request, resClone);

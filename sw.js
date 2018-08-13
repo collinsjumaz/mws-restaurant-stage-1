@@ -1,4 +1,4 @@
-const CacheName = 'restaurant';
+const CacheName = 'version 1.0.0';
 
 //  listing assets to cache on install
 self.addEventListener('install', event => {
@@ -7,10 +7,11 @@ self.addEventListener('install', event => {
       .then(cache => {
         return cache.addAll([
           '/index.html',
+          'favicon.ico'
           // '/restaurant.html',
           '/css/styles.css',
           '/js/dbhelper.js',
-          '/js/register_sw.js',
+          '/register.js',
           '/js/main.js',
           '/js/restaurant_info.js',
           '/restaurant.html?id=1',
@@ -39,7 +40,7 @@ self.addEventListener('activate', event=> {
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cache => {
-          if (cache !== cacheName) {
+          if (cache !== CacheName) {
             console.log('Service Worker: Clearing Old Cache');
             return caches.delete(cache);
           }
@@ -58,7 +59,7 @@ self.addEventListener('fetch', event => {
         // Make copy of response
         const resClone = res.clone();
         // Open cache
-        caches.open(cacheName).then(cache => {
+        caches.open(CacheName).then(cache => {
           // Add response to cache
           cache.put(event.request, resClone);
         });

@@ -1,7 +1,7 @@
 (function() {
   'use strict';
     const filesToCache = [
-      '.',
+      '/',
       'css/styles.css',
       'js/dbhelper.js',
       'js/main.js',

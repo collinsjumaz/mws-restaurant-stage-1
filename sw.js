@@ -1,3 +1,24 @@
+import idb from "idb";
+
+var cacheID = "mws-restaruant";
+let dbReady = false;
+
+const dbPromise = idb.open("restaurant", 3, upgradeDB => {
+  switch (upgradeDB.oldVersion) {
+    case 0:
+      upgradeDB.createObjectStore("restaurants", {keyPath: "id"});
+    case 1:
+      {
+        const reviewsStore = upgradeDB.createObjectStore("reviews", {keyPath: "id"});
+        reviewsStore.createIndex("restaurant_id", "restaurant_id");
+      }
+    case 2:
+      upgradeDB.createObjectStore("pending", {
+        keyPath: "id",
+        autoIncrement: true
+      });
+  }
+});
 (function() {
   'use strict';
     const filesToCache = [
@@ -5,7 +26,6 @@
       'css/styles.css',
       'js/dbhelper.js',
       'js/main.js',
-      'js/restaurant_info.js',
       'img/1.jpg',
       'img/2.jpg',
       'img/3.jpg',

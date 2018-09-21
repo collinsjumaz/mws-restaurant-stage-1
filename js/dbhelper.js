@@ -47,9 +47,9 @@ class DBHelper {
           restaurants.map(restaurant => {
             dbPromise.then(dbObj => {
               const tx = dbObj.transaction("Restraunt-Review", "readwrite");
-              const Restaurantdb = tx.objectStore("Restraunt-Review");
+              const RestrauntReview = tx.objectStore("Restraunt-Review");
 
-              foodiesStore.put(restaurant);
+              RestrauntReview.put(restaurant);
             });
           });
           callback(null, restaurants);
@@ -191,11 +191,8 @@ class DBHelper {
   /**
    * Restaurant image URL.
    */
-  static imageUrlForRestaurant(restaurant) {
-    if (!restaurant.photograph)
-            return (`/img/noimage.png`);
-    
-        return (`/img/${restaurant.photograph}.jpg`);
+ static imageUrlForRestaurant(restaurant) {
+    return (`img/${restaurant.photograph + '.jpg'}`);
   }
 
 

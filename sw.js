@@ -37,8 +37,7 @@
     self.addEventListener('fetch', function(event) {
       let requestUrl = new URL(event.request.url);
       if (requestUrl.origin === location.origin) {
-        // since right now we are serving single html page, for any requests
-        // we'll be caching restaurant.html page only once
+        // caching restaurant.html
         if (requestUrl.pathname.startsWith('/restaurant.html')) {
           event.respondWith(serveRestaurantHTML(event.request));
           return;
@@ -61,8 +60,7 @@
               });
             });
           }).catch(function(error) {
-            // If fetch cannot reach the network, it throws an error and sends it
-            // to .catch.
+            // If fetch cannot reach the network, it throws an error and sends it to catch.
             return caches.match('');
           })
         );
@@ -71,7 +69,7 @@
 
     //  delete unused caches
     self.addEventListener('activate', function(event) {
-      console.log('Activating new service worker...');
+      console.log('Activating  service worker...');
 
       let cacheWhitelist = [staticCacheName];
 
@@ -88,13 +86,6 @@
       );
     });
 
-    self.addEventListener('sync', function(event) {
-      console.log(`Connectivity is stable again :) Let's put data online `);
-      if (event.tag == 'reviewSync') {
-        console.log('sync event fired for reviews that user added while offline');
-        event.waitUntil(sendMessageToClient({message: 'post-offline-reviews-to-server'}));
-      }
-    });
   
     function sendMessageToClient(message) {
         // Send a message to the client.
@@ -108,7 +99,7 @@
     // serves restaurants.html page
     function serveRestaurantHTML(request) {
       console.log(request);
-      // Use this url to store & match retaurants.hmtl in the cache.
+      // store & match retaurants.hmtl in the cache.
       const storageUrl = request.url.split('?')[0];
 
       return caches.open(staticCacheName).then(function(cache) {

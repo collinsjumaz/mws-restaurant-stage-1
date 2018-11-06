@@ -193,9 +193,9 @@ class DBHelper {
    */
  static imageUrlForRestaurant(restaurant) {
     if (!restaurant.photograph) {
-        return (`img/${restaurant.id + '.jpg'}`);
+        return (`img/${restaurant.id + '.webp'}`);
     }
-    return (`img/${restaurant.photograph + '.jpg'}`);
+    return (`img/${restaurant.photograph + '.webp'}`);
 }
 
 

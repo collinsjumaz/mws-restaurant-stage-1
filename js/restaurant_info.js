@@ -102,6 +102,8 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   // fill reviews
   fillReviewsHTML();
 }
+ // fill reviews
+  DBHelper.fetchRestaurantReviewsById(restaurant.id, fillReviewsHTML);
 
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
@@ -126,12 +128,30 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-fillReviewsHTML = (reviews = self.restaurant.reviews) => {
-  const container = document.getElementById('reviews-container');
-  const title = document.createElement('h3');
-  title.innerHTML = 'Reviews';
-  container.appendChild(title);
 
+const fillReviewsHTML = (error, reviews) => {
+  self.restaurant.reviews = reviews;
+
+  if (error) {
+    console.log('Error retrieving reviews', error);
+  }
+  const header = document.getElementById('reviews-header');
+  header.innerHTML = '';
+
+  const title = document.createElement('h2');
+  title.innerHTML = 'Reviews';
+  header.appendChild(title);
+  
+  const addReview = document.createElement('button');
+  addReview.id = 'review-add-btn';
+  addReview.classList.add('review_btn');
+  addReview.innerHTML = '+';
+  addReview.setAttribute('aria-label', 'add review');
+  addReview.title = 'Add Review';
+  addReview.addEventListener('click', openAddReviewModal);
+  header.appendChild(addReview);
+  
+  const container = document.getElementById('reviews-container');
   if (!reviews) {
     const noReviews = document.createElement('p');
     noReviews.innerHTML = 'No reviews yet!';
@@ -139,12 +159,13 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
     return;
   }
   const ul = document.getElementById('reviews-list');
+  ul.innerHTML = '';
+  reviews.reverse();
   reviews.forEach(review => {
     ul.appendChild(createReviewHTML(review));
   });
   container.appendChild(ul);
-}
-
+};
 /**
  * Create review HTML and add it to the webpage.
  */

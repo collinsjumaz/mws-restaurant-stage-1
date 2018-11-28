@@ -328,3 +328,22 @@ display: none;
 #restaurant-hours td {
   color: #666;
 }
+#reviews-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+#reviews-list li p.createdAt {
+  float: right;
+}
+#reviews-list li p.updatedAt {
+  float: right;
+  color: #008800;
+  clear: both;
+}
+#reviews-list li p.rating {
+  float: left;
+}
+#reviews-list li p.comments {
+  clear: both;
+}

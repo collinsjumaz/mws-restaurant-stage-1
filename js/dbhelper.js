@@ -13,6 +13,12 @@ class DBHelper {
     return `http://localhost:${port}/restaurants`;
   }
 
+  static fetchRestaurantsReviewById(id, callback) {
+    fetch(DBHelper.DATABASE_URL + `/reviews/restaurant_id=${id}`)
+    .then(response => response.json())
+    .then(data => callback(null, data))
+    .catch(err => callback(err, null))
+  }
   /**
    * Fetch all restaurants.
    */

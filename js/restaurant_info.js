@@ -71,11 +71,17 @@ fetchRestaurantFromURL = (callback) => {
         console.error(error);
         return;
       }
-      fillRestaurantHTML();
-      callback(null, restaurant)
+      DBHelper.fetchRestaurantReviews(self.restaurant, (error, reviews) => {
+        self.restaurant.reviews = reviews;
+        if (!reviews) {
+          console.error(error);
+        }
+        fillRestaurantHTML();
+        callback(null, restaurant)
+      });
     });
   }
-};
+}
 
 /**
  * Create restaurant HTML and add it to the webpage
@@ -83,6 +89,13 @@ fetchRestaurantFromURL = (callback) => {
 fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
+
+  const favorite = document.getElementById('favorite');
+  favorite.checked = restaurant.is_favorite;
+  favorite.addEventListener('change', event => {
+    DBHelper.toggleFavorite(restaurant, event.target.checked);
+  });
+
 
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;

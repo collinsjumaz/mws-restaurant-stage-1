@@ -13,7 +13,7 @@ class DBHelper {
     static openDatabase() {
         if (!window.navigator.serviceWorker) {
             console.error(
-                "Your browser does not support Service Worker/IDB, please upgrade to the latest version of any major browser to enjoy offline mode"
+                "This browser does not support Service Worker/IDB, please upgrade to the latest version of any major browser to enjoy offline mode"
             );
             return Promise.resolve();
         }
@@ -268,6 +268,47 @@ class DBHelper {
         );
         marker.addTo(newMap);
         return marker;
+    }
+
+        /**
+     * Fetch all reviews for a restaurant
+     */
+    static fetchRestaurantReviews(restaurant, callback) {
+        DBHelper.dbPromise.then(db => {
+            if (!db) return;
+            // 1. Check if there are reviews in the IDB
+            const tx = db.transaction('reviewsDBase');
+            const store = tx.objectStore('reviewsDBase');
+            store.getAll().then(results => {
+                if (results && results.length > 0) {
+                    // Continue with reviews from IDB
+                    callback(null, results);
+                } else {
+                    // 2. If there are no reviews in the IDB, fetch reviews from the network
+                    fetch(`${DBHelper.DATABASE_URL}/reviews/?restaurant_id=${restaurant.id}`)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(reviews => {
+                        this.dbPromise.then(db => {
+                            if (!db) return;
+                            // 3. Put fetched reviews into IDB
+                            const tx = db.transaction('reviewsDBase', 'readwrite');
+                            const store = tx.objectStore('reviewsDBase');
+                            reviews.forEach(review => {
+                                store.put(review);
+                            })
+                        });
+                        // Continue with reviews from network
+                        callback(null, reviews);
+                    })
+                    .catch(error => {
+                        // Unable to fetch reviews from network
+                        callback(error, null);
+                    })
+                }
+            })
+        });
     }
     /* static mapMarkerForRestaurant(restaurant, map) {
     const marker = new google.maps.Marker({

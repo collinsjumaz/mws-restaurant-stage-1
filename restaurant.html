@@ -40,7 +40,8 @@
           <!-- End map -->
           <!-- Beginning restaurant -->
           <section id="restaurant-container" role="application" aria-label="Google-Map">
-            <h1 id="restaurant-name"></h1>
+            <h2 id="restaurant-name"></h2>
+            <p><input type="checkbox" id="favorite"> <label for="favorite">Mark As Favorite</label></p>
             <img id="restaurant-img">
             <p id="restaurant-cuisine"></p>
             <p id="restaurant-address"></p>
@@ -48,11 +49,34 @@
           </section>
           <!-- end restaurant -->
           <!-- Beginning reviews -->
-          <section id="reviews-container" aria-label="Reviews">
-            <div id="reviews-header"></div>
-            <ul id="reviews-list"></ul>
-          </section>
-          <!-- End reviews -->
+    <section id="reviews-container">
+      <ul id="reviews-list"></ul>
+      <form id="reviewForm">
+        <p>
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" placeholder="Your Name" required/>
+        </p>
+        <p>&nbsp;</p>
+        <p>
+          <label for="rating">Rating</label>
+          <select name="rating">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3" selected>3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </p>
+        <p>
+          <!-- <label for="reviewText">Review text:</label> -->
+          <textarea rows="4" name="comments" placeholder="Write your review here" required></textarea>
+        </p>
+        <p>
+          <input type="submit" value="Submit Review">
+        </p>
+      </form>
+    </section>
+    <!-- End reviews -->
       </main>
       <!-- End main -->
 

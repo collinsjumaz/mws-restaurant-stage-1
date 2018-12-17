@@ -333,6 +333,8 @@ display: none;
   background-color: brown;
   color: white;
   width: 100%;
+   border-radius: 3px;
+
 }
 #reviews-list li p:nth-child(2), #reviewForm p:nth-child(2) {
   padding: 5px;
@@ -341,12 +343,10 @@ display: none;
   width: 100%;
 }
 #reviews-list li p:nth-child(3), #reviewForm p:nth-child(3) {
-  background-color: brown;
-  color: white;
+ 
   padding: 4px;
   margin-left: 5px;
   border-radius: 3px;
-  text-transform: uppercase;
 }
 #reviews-list li p:nth-child(4), #reviewForm p:nth-child(4) {
   margin: 0 5px 10px 5px;

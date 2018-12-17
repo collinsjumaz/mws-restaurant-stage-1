@@ -1,13 +1,12 @@
 let restaurant;
-let reviews;
 var newMap;
 
-/**
+/**  
  * Initialize map as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {  
   initMap();
-});
+}); 
 
 /**
  * Initialize leaflet map
@@ -23,7 +22,7 @@ initMap = () => {
         scrollWheelZoom: false
       });
       L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
-        mapboxToken: 'pk.eyJ1IjoiY29sbGluc2p1bWEiLCJhIjoiY2prZmNobGFzMDY2aTNxbXI4MGJveTBpbyJ9.wUh2dUcl7LpyIv2EisMI-A',
+        mapboxToken: 'pk.eyJ1IjoiZGVudmVyOTkiLCJhIjoiY2prMW83OTY0MGkzNDNxa2NyOWN1bXd2dCJ9.Ng5ITZDIqZlPBkDXCfdPGw',
         maxZoom: 18,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
           '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -34,8 +33,7 @@ initMap = () => {
       DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
     }
   });
-}  
-
+}   
  
 /* window.initMap = () => {
   fetchRestaurantFromURL((error, restaurant) => {
@@ -53,18 +51,17 @@ initMap = () => {
   });
 } */
 
-
 /**
  * Get current restaurant from page URL.
  */
 fetchRestaurantFromURL = (callback) => {
   if (self.restaurant) { // restaurant already fetched!
-    callback(null, self.restaurant);
+    callback(null, self.restaurant)
     return;
   }
   const id = getParameterByName('id');
   if (!id) { // no id found in URL
-    error = 'No restaurant id in URL';
+    error = 'No restaurant id in URL'
     callback(error, null);
   } else {
     DBHelper.fetchRestaurantById(id, (error, restaurant) => {
@@ -74,10 +71,10 @@ fetchRestaurantFromURL = (callback) => {
         return;
       }
       fillRestaurantHTML();
-      callback(null, restaurant);
+      callback(null, restaurant)
     });
   }
-};
+}
 
 /**
  * Create restaurant HTML and add it to the webpage
@@ -86,31 +83,25 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
 
-  const favorite = document.getElementById('favorite');
-  favorite.checked = restaurant.is_favorite;
-  favorite.addEventListener('change', event => {
-    DBHelper.toggleFavorite(restaurant, event.target.checked);
-  });
-
-
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  const altText = restaurant.name + ' restaurant in ' + restaurant.neighborhood;
-  image.alt = altText;
+  //add alternative text to describe image
+  image.alt = "Image of the restaurant "+ restaurant.name;
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
+
   // fill operating hours
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
   }
   // fill reviews
-  // DBHelper.fetchReviews(restaurant.id);
-};
+  fillReviewsHTML();
+}
 
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
@@ -119,7 +110,6 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
   const hours = document.getElementById('restaurant-hours');
   for (let key in operatingHours) {
     const row = document.createElement('tr');
-    row.tabIndex = 0; 
 
     const day = document.createElement('td');
     day.innerHTML = key;
@@ -131,29 +121,45 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 
     hours.appendChild(row);
   }
-};
+}
 
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+fillReviewsHTML = () => {
+  const restaurant_id = getParameterByName('id');
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
-  title.setAttribute('tabindex', 0);
-  container.prepend(title);
-  
-  if (!reviews) {
+  container.appendChild(title);
+
+  /*if (!reviews) {
     const noReviews = document.createElement('p');
     noReviews.innerHTML = 'No reviews yet!';
-    noReviews.setAttribute('tabindex', 0);
+    container.appendChild(noReviews);
+    return;
+  }*/
+  DBHelper.fetchReviews(restaurant_id);
+  const ul = document.getElementById('reviews-list');
+  /*reviews.forEach(review => {
+    ul.appendChild(createReviewHTML(review));
+  });
+  container.appendChild(ul);*/
+}
+
+/**
+ * Create new review HTML and add it to others reviews in the page.
+ */
+fillReviewHTML = (review) => {
+  const container = document.getElementById('reviews-container');
+  if (!review) {
     container.appendChild(noReviews);
     return;
   }
   const ul = document.getElementById('reviews-list');
-  reviews.forEach(review => {
-    ul.appendChild(createReviewHTML(review));
-  });
+  ul.appendChild(createReviewHTML(review));
+  container.appendChild(ul);
+
 }
 
 /**
@@ -161,45 +167,53 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
+  const div = document.createElement('div');
   const name = document.createElement('p');
   name.innerHTML = review.name;
-  name.setAttribute('tabindex', 0);
-  li.appendChild(name);
+  div.appendChild(name);
+ 
+  const date = document.createElement('p');
+  const review_date = new Date(review.createdAt).toGMTString();
+  date.innerHTML = review_date;
+  div.appendChild(date);
 
-  const date = document.createElement('p'); 
-  date.innerHTML = new Date(review.updatedAt).toDateString();
-  date.setAttribute('tabindex', 0);
-  li.appendChild(date);
+  li.appendChild(div);
 
   const rating = document.createElement('p');
   rating.innerHTML = `Rating: ${review.rating}`;
-  rating.setAttribute('tabindex', 0);
   li.appendChild(rating);
 
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
-  comments.setAttribute('tabindex', 0);
   li.appendChild(comments);
-
+  
   return li;
 }
 
-const form = document.getElementById("reviewForm");
-form.addEventListener("submit", function (event) {
+/**
+ *function that will call to post review server
+*/
+addReview = () => {          
+  const name = document.getElementById('reviewer_name').value;
+  const id = document.getElementById('id');
+  const restaurantId = getParameterByName('id');
+  id.value = restaurantId;
+  const rating = document.querySelector('input[name="rating"]:checked').value;
+  const comments = document.getElementById('comment_text').value;  
+  const ul = document.getElementById('reviews-list');
+
+  /* define an object parameters that will be send to dbhelper*/
+  const parameters = {
+    "restaurant_id": parseInt(restaurantId),
+    "name": name,
+    "rating": parseInt(rating),
+    "comments": comments
+  } 
+  DBHelper.addNewReview(parameters);
+  fillReviewHTML(parameters);
   event.preventDefault();
-  let review = {"restaurant_id": self.restaurant.id};
-  const formdata = new FormData(form);
-  for (var [key, value] of formdata.entries()) {
-    review[key] = value;
-  }
-  DBHelper.submitReview(review)
-    .then(data => {
-      const ul = document.getElementById('reviews-list');
-      ul.appendChild(createReviewHTML(review));
-      form.reset();
-    })
-    .catch(error => console.error(error))
-});
+
+}
 
 /**
  * Add restaurant name to the breadcrumb navigation menu
@@ -209,7 +223,7 @@ fillBreadcrumb = (restaurant=self.restaurant) => {
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
   breadcrumb.appendChild(li);
-};
+}
 
 /**
  * Get a parameter by name from page URL.
@@ -225,18 +239,4 @@ getParameterByName = (name, url) => {
   if (!results[2])
     return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
-};
-
-clearForm = () => {
-  document.querySelector('#name').value = '';
-  document.querySelector('#rate').value = '';
-  document.querySelector('#comment').value = '';
-}
-
-markFavourite = (favStar) => {
-  let id = getParameterByName('id');
-  let name = 
-  favStar.classList.toggle('checked');
-  let flag = favStar.classList.contains('checked');
-  DBHelper.submitFavRestaurant(id, flag);
 }

@@ -291,6 +291,7 @@ display: none;
   text-transform: uppercase;
   width: 90%;
 }
+
 #restaurant-container, #reviews-container {
   border-bottom: 1px solid #d9d9d9;
   border-top:1px solid #fff;
@@ -312,7 +313,9 @@ display: none;
   padding: 0;
 }
 #reviews-list li, #reviewForm {
-  background-color: #fff;
+   background-color: #fff;
+    padding: 1em;
+    border-radius: 0 0 20px 0;
   display: flex;
   flex-wrap:wrap;
   list-style-type: none;
@@ -327,18 +330,18 @@ display: none;
 }
 #reviews-list li p:nth-child(1), #reviewForm p:nth-child(1) {
   padding: 5px;
-  background-color: #333;
+  background-color: brown;
   color: white;
-  width: calc(100% - 140px);
+  width: 100%;
 }
 #reviews-list li p:nth-child(2), #reviewForm p:nth-child(2) {
   padding: 5px;
-  background-color: #333;
+  background-color: brown;
   color: #ccc;
-  width: 120px;
+  width: 100%;
 }
 #reviews-list li p:nth-child(3), #reviewForm p:nth-child(3) {
-  background-color: #6b3b04;
+  background-color: brown;
   color: white;
   padding: 4px;
   margin-left: 5px;
@@ -388,3 +391,11 @@ display: none;
   #reviews-list li {
     padding: 0;
   }
+
+  .inside #footer {
+    position: relative;
+    width: 100%;
+    top: 121px;
+    padding: 25px 0 25px;
+  }
+}
